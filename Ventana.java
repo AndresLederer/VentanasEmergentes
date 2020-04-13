@@ -1,3 +1,22 @@
+/*	VENTANA (JFrame)
+ *	___________________________
+ * |PANEL (JPanel)			   |
+ * |						   |	
+ * |  [ (JLabel) ]	    	   |
+ * |						   |
+ * |  [ (JLabel) ]	    	   |
+ * |						   |
+ * |___________________________|
+ * 
+ * La VENTANA es el cuadrilatero emergente en sí, sin un PANEL encima no tendria ningun complemento
+ * 
+ * El PANEL es el conjunto los componentes que se coloca sobre la VENTANA
+ * 
+ * Los JLabel son las ETIQUETAS (txt/img) que forman al PANEL ("complementos")
+ * 
+ * 
+ * 
+ */
 package Ventana;
 
 //librerias importadas
@@ -8,11 +27,13 @@ import java.awt.Image;
 import javax.swing.JFrame; //Lib para ventana emergente
 import javax.swing.JPanel; //Lib para panel en ventana
 import javax.swing.JLabel; //Lib para etiquetas en panel
+import javax.swing.JButton;
 
 import javax.swing.SwingConstants; //Lib para posicionar el txt de las JLabel
 import javax.swing.ImageIcon; //Lib para usar img (JLabel)
 
 public class Ventana extends JFrame {
+	JPanel panel;
 	
 	//CREO Y DEFINO VENTANA
 	public Ventana() {
@@ -26,7 +47,7 @@ public class Ventana extends JFrame {
 		//this.setBounds(1000,250,500,300);
 
 		//define el tamaño de la ventana (ancho,alto)
-		this.setSize(1000,800);
+		this.setSize(600,720);
 		
 		//define ubicacion inicial de la ventana (x,y)
 		//this.setLocation(1000,250);
@@ -41,19 +62,30 @@ public class Ventana extends JFrame {
 	
 	//CREO PANEL Y DEFINO SUS COMPONENTES
 	private void componente() {
+		crearPanel();
+		colocarEtiquetas();
+		colocarBoton();
+		
+		//FINALLY, AGREGO EL PANEL EN LA VENTANA EMERGENTE
+		this.getContentPane().add(panel); 
+	}
+	
+	private void crearPanel() {
 		//PANEL (JPanel)
-		JPanel panel = new JPanel(); //inicio un panel JPanel
+		panel = new JPanel(); //inicio un panel JPanel
 		panel.setBackground(Color.DARK_GRAY); //defino el color de fondo
-		panel.setLayout(null); //desactivo el diseño por defecto del panel para poder mover los componentes libremente => OBLIGADAMTE. DEBO DEFINIR UNA POSICION DE LA EQTIQUETA CON .SETLABEL(x,y,width,hight)
-		
-		
-		
+		panel.setLayout(null); //desactivo el diseño por defecto del panel para poder mover los componentes libremente 
+		//=> OBLIGADAMTE. DEBO DEFINIR UNA POSICION A CADA EQTIQUETA CON .setBounds(x,y,width,hight)
+
+	}
+	
+	private void colocarEtiquetas() {
 		//ETIQUETA DE TXT (JLabel)
 		//JLabel etiquetaTxt1 = new JLabel(); //creo etiqueta de txt
 		JLabel etiquetaTxt1 = new JLabel("My best memories in pictures",SwingConstants.CENTER);
 		//etiquetaTxt1.setText("My best memories in pictures!"); //defino el txt de la etiqueta
 		//etiquetaTxt1.setHorizontalAlignment(SwingConstants.CENTER); //defino la posicion del txt EN la ETIQUETA
-		etiquetaTxt1.setBounds(300,10,400,30); //reposiciono etiquetaTxt1
+		etiquetaTxt1.setBounds(100,30,400,40); //reposiciono etiquetaTxt1
 		
 		etiquetaTxt1.setFont(new Font ("arial",Font.BOLD,20));//defino fuente,estilo y tamaño del texto
 		etiquetaTxt1.setForeground(Color.WHITE); //defino el color de las letras del texto
@@ -65,20 +97,27 @@ public class Ventana extends JFrame {
 		ImageIcon img = new ImageIcon("C:\\Users\\dobra\\eclipse-workspace\\VentanaEmergente\\src\\Ventana\\sunrise.jpg"); //creo un objeto q contiene la imagen en sí
 		//JLabel etiqImg = new JLabel(new ImageIcon("sunrise.jpg")); //creo etiqueta de imagen
 		JLabel etiqImg = new JLabel();
-		etiqImg.setBounds(350,70,300,500); //defino el tamaño y la poscion de la etiqueta imagen -> (x,y,W,H)
+		etiqImg.setBounds(150,100,300,500); //defino el tamaño y la poscion de la etiqueta imagen -> (x,y,W,H)
 		//etiqImg.setOpaque(true);
 		//etiqImg.setBackground(Color.RED);
-		
+				
 		etiqImg.setIcon(new ImageIcon(img.getImage().getScaledInstance(etiqImg.getWidth(),etiqImg.getHeight(),Image.SCALE_SMOOTH)));
 		//1- defino la imagen q tendra la etiqueta => creo otro objeto ImageIcon y llamo al objeto anterior q define la ruta
 		//2- al objeto q llamo, lo llamo pero en una instancia de tamaño a escala => defino width, height y la forma de escalado
 		//3- Ahora la etiqueta y la imagen tendrán AMBAS el mismo tamaño => uso <etiqImg.setBounds(x,y,W,H)> para definir poscion y tamaños
+				
+		panel.add(etiquetaTxt1); //agrego etiqueta txt al panel
+		panel.add(etiqImg); //agrego etiqueta img al panel
+	}
+
+	private void colocarBoton() {
+		JButton boton = new JButton("INICIO"); //instancio btn JButton con txt dentro
+		boton.setBounds(220,630,160,40); //defino posicion y tamaño
+		boton.setFont(new Font("arial",Font.BOLD,20)); //defino font,style,size del txt
+		boton.setForeground(Color.BLUE); //defino color del txt
+		boton.setMnemonic('i'); //defino shortcut del btn (ALT+i)
 		
-		panel.add(etiquetaTxt1); //agrego componentes al panel
-		panel.add(etiqImg);
-		
-		//FINALLY, AGREGO EL PANEL EN LA VENTANA EMERGENTE
-		this.getContentPane().add(panel); 
+		panel.add(boton); //agrego el boton al panel
 	}
 }
 
