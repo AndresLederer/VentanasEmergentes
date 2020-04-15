@@ -27,15 +27,18 @@ import java.awt.Image;
 import javax.swing.JFrame; //Lib para ventana emergente
 import javax.swing.JPanel; //Lib para panel en ventana
 import javax.swing.JLabel; //Lib para etiquetas en panel
+import javax.swing.ImageIcon; //Lib para usar img (JLabel)
+import javax.swing.SwingConstants; //Lib para posicionar el txt de las JLabel
 import javax.swing.JButton; //Lib para botones
 import javax.swing.JRadioButton; //Lib para radio botones
-
-import javax.swing.SwingConstants; //Lib para posicionar el txt de las JLabel
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon; //Lib para usar img (JLabel)
+import javax.swing.ButtonGroup; //Lib para agrupar radio botones
+import javax.swing.JTextField; //Lib para campos de texto de una sola linea
+import javax.swing.JTextArea; //Lib para areas de txt de multiples lineas
 
 public class Ventana extends JFrame {
-	JPanel panel;
+	//defino un atributo JPanel para q pueda ser accedido en todos los metodos de la clase
+	//el panel sera instanciado en el metodo crearPanel()
+	private JPanel panel;
 	
 	//CREO Y DEFINO VENTANA
 	public Ventana() {
@@ -58,16 +61,18 @@ public class Ventana extends JFrame {
 		this.setLocationRelativeTo(null);
 		
 		//llamado al metodo q crea y pega el panel inicial en la ventana emergente
-		componente();
+		componentes();
 		
 	}
 	
 	//CREO PANEL Y DEFINO SUS COMPONENTES
-	private void componente() {
+	private void componentes() {
 		crearPanel();
-		colocarEtiquetas();
-		colocarBotones();
-		colocarRadioBotones();
+//		colocarEtiquetas();
+//		colocarBotones();
+//		colocarRadioBotones();
+		colocarCampoTxt();
+		colocarAreaTxt();
 		
 		//FINALLY, AGREGO EL PANEL EN LA VENTANA EMERGENTE
 		this.getContentPane().add(panel); 
@@ -78,7 +83,7 @@ public class Ventana extends JFrame {
 		panel = new JPanel(); //inicio un panel JPanel
 		panel.setBackground(Color.DARK_GRAY); //defino el color de fondo
 		panel.setLayout(null); //desactivo el diseño por defecto del panel para poder mover los componentes libremente 
-		//=> OBLIGADAMTE. DEBO DEFINIR UNA POSICION A CADA EQTIQUETA CON .setBounds(x,y,width,hight)
+		//=> OBLIGADAMTE. DEBO DEFINIR UNA POSICION A CADA COMPONENTE DEL PANEL CON .setBounds(x,y,width,hight)
 
 	}
 	
@@ -160,11 +165,41 @@ public class Ventana extends JFrame {
 		rbHombre.setBounds(100,600,120,25);
 		rbMujer.setBounds(240,600,120,25);
 		rbSinGenero.setBounds(380,600,120,25);
-
+		
 		//agrego los RadioButtons al panel
 		panel.add(rbHombre);
 		panel.add(rbMujer);
 		panel.add(rbSinGenero);
+	}
+
+	private void colocarCampoTxt() {
+		JTextField campoTxtNombre = new JTextField(); //instacio linea de txt
+		campoTxtNombre.setBounds(200,20,200,30); //defino posicion y tamaño
+		campoTxtNombre.setText("Nombre"); //defino un texto por defecto
+		campoTxtNombre.setFont(new Font("arial",Font.ITALIC,10)); //defino fuente del texto
+		campoTxtNombre.setForeground(Color.GRAY); //defino color del texto
+//		cuadroTxt.setEditable(false); //defino si se puede editar o no el cuadro de texto (por defecto TRUE)
+
+		JTextField campoTxtApellido = new JTextField(); //instacio linea de txt
+		campoTxtApellido.setBounds(200,65,200,30); //defino posicion y tamaño
+		campoTxtApellido.setText("Apellido");
+		campoTxtApellido.setFont(new Font("arial",Font.ITALIC,10)); //defino fuente del texto
+		campoTxtApellido.setForeground(Color.GRAY); //defino color del texto
+		
+//		System.out.println("TEXTO DEL campoTxtNombre: "+campoTxtNombre.getText()); //muestro por consola el texto q haya en campoTxtNombre
+		
+		panel.add(campoTxtNombre); //agrego la linea de texto al panel
+		panel.add(campoTxtApellido); //agrego la linea de texto al panel
+	}
+	
+	private void colocarAreaTxt() {
+		JTextArea areaTxt = new JTextArea();
+		areaTxt.setText("Descripción");
+		areaTxt.setBounds(200,110,200,100);
+		areaTxt.setFont(new Font("arial",Font.ITALIC,10));
+		areaTxt.setForeground(Color.GRAY);
+		
+		panel.add(areaTxt);
 	}
 }
 
