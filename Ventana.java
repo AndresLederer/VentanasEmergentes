@@ -27,9 +27,11 @@ import java.awt.Image;
 import javax.swing.JFrame; //Lib para ventana emergente
 import javax.swing.JPanel; //Lib para panel en ventana
 import javax.swing.JLabel; //Lib para etiquetas en panel
-import javax.swing.JButton;
+import javax.swing.JButton; //Lib para botones
+import javax.swing.JRadioButton; //Lib para radio botones
 
 import javax.swing.SwingConstants; //Lib para posicionar el txt de las JLabel
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon; //Lib para usar img (JLabel)
 
 public class Ventana extends JFrame {
@@ -64,7 +66,8 @@ public class Ventana extends JFrame {
 	private void componente() {
 		crearPanel();
 		colocarEtiquetas();
-		colocarBoton();
+		colocarBotones();
+		colocarRadioBotones();
 		
 		//FINALLY, AGREGO EL PANEL EN LA VENTANA EMERGENTE
 		this.getContentPane().add(panel); 
@@ -85,7 +88,7 @@ public class Ventana extends JFrame {
 		JLabel etiquetaTxt1 = new JLabel("My best memories in pictures",SwingConstants.CENTER);
 		//etiquetaTxt1.setText("My best memories in pictures!"); //defino el txt de la etiqueta
 		//etiquetaTxt1.setHorizontalAlignment(SwingConstants.CENTER); //defino la posicion del txt EN la ETIQUETA
-		etiquetaTxt1.setBounds(100,30,400,40); //reposiciono etiquetaTxt1
+		etiquetaTxt1.setBounds(150,20,300,30); //reposiciono etiquetaTxt1
 		
 		etiquetaTxt1.setFont(new Font ("arial",Font.BOLD,20));//defino fuente,estilo y tamaño del texto
 		etiquetaTxt1.setForeground(Color.WHITE); //defino el color de las letras del texto
@@ -93,11 +96,11 @@ public class Ventana extends JFrame {
 		etiquetaTxt1.setBackground(Color.BLUE);//defino el color de fondo de la JLlabel
 		
 		
-		///ETIQUETA IMG
+		///ETIQUETA IMG (JLabel)
 		ImageIcon img = new ImageIcon("C:\\Users\\dobra\\eclipse-workspace\\VentanaEmergente\\src\\Ventana\\sunrise.jpg"); //creo un objeto q contiene la imagen en sí
 		//JLabel etiqImg = new JLabel(new ImageIcon("sunrise.jpg")); //creo etiqueta de imagen
 		JLabel etiqImg = new JLabel();
-		etiqImg.setBounds(150,100,300,500); //defino el tamaño y la poscion de la etiqueta imagen -> (x,y,W,H)
+		etiqImg.setBounds(175,70,250,430); //defino el tamaño y la poscion de la etiqueta imagen -> (x,y,W,H)
 		//etiqImg.setOpaque(true);
 		//etiqImg.setBackground(Color.RED);
 				
@@ -110,14 +113,58 @@ public class Ventana extends JFrame {
 		panel.add(etiqImg); //agrego etiqueta img al panel
 	}
 
-	private void colocarBoton() {
-		JButton boton = new JButton("INICIO"); //instancio btn JButton con txt dentro
-		boton.setBounds(220,630,160,40); //defino posicion y tamaño
-		boton.setFont(new Font("arial",Font.BOLD,20)); //defino font,style,size del txt
-		boton.setForeground(Color.BLUE); //defino color del txt
-		boton.setMnemonic('i'); //defino shortcut del btn (ALT+i)
+	private void colocarBotones() {
+//		BOTON (JButton)
+		JButton btnLogIn = new JButton("Log In"); //instancio btn JButton con txt dentro
+		btnLogIn.setBounds(155,520,120,30); //defino posicion y tamaño
+		btnLogIn.setFont(new Font("arial",Font.PLAIN,15)); //defino font,style,size del txt
+		btnLogIn.setForeground(Color.BLACK); //defino color del txt
+		btnLogIn.setMnemonic('l'); //defino shortcut del btn (ALT+i)
 		
-		panel.add(boton); //agrego el boton al panel
+		JButton btnSignIn = new JButton("Sign In");
+		btnSignIn.setBounds(325,520,120,30); 
+		btnSignIn.setFont(new Font("arial",Font.PLAIN,15));
+		btnSignIn.setForeground(Color.BLACK);
+		btnSignIn.setMnemonic('s');
+		
+		panel.add(btnLogIn); //agrego el boton al panel
+		panel.add(btnSignIn);
+	}
+	
+	private void colocarRadioBotones() {
+		//RADIO BOTONES
+		JRadioButton rbHombre = new JRadioButton("Hombre",false);
+		JRadioButton rbMujer = new JRadioButton("Mujer",false);
+		JRadioButton rbSinGenero = new JRadioButton("Prefiero no decirlo",false);
+		
+		//Agrupo RadioButtons
+		ButtonGroup rbGroup = new ButtonGroup();
+		rbGroup.add(rbHombre);
+		rbGroup.add(rbMujer);
+		rbGroup.add(rbSinGenero);
+
+		//defino tipografia
+		rbHombre.setFont(new Font("arial",Font.PLAIN,10));
+		rbMujer.setFont(new Font("arial",Font.PLAIN,10));
+		rbSinGenero.setFont(new Font("arial",Font.PLAIN,10));
+		
+		//defino color de fonde y color de la letra
+		rbHombre.setOpaque(false);
+		rbHombre.setForeground(Color.GREEN);
+		rbMujer.setOpaque(false);
+		rbMujer.setForeground(Color.GREEN);
+		rbSinGenero.setOpaque(false);
+		rbSinGenero.setForeground(Color.GREEN);
+		
+		//defino posicion de cada RadioButton
+		rbHombre.setBounds(100,600,120,25);
+		rbMujer.setBounds(240,600,120,25);
+		rbSinGenero.setBounds(380,600,120,25);
+
+		//agrego los RadioButtons al panel
+		panel.add(rbHombre);
+		panel.add(rbMujer);
+		panel.add(rbSinGenero);
 	}
 }
 
