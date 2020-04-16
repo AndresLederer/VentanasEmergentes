@@ -23,8 +23,6 @@ package Ventana;
 import java.awt.Color; //Lib para colores de bg y fg
 import java.awt.Font; //Lib para definir fuente de JLabel de texto
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JFrame; //Lib para ventana emergente
 import javax.swing.JPanel; //Lib para panel en ventana
@@ -36,6 +34,11 @@ import javax.swing.JRadioButton; //Lib para radio botones
 import javax.swing.ButtonGroup; //Lib para agrupar radio botones
 import javax.swing.JTextField; //Lib para campos de texto de una sola linea
 import javax.swing.JTextArea; //Lib para areas de txt de multiples lineas
+
+import java.awt.event.ActionEvent; //Lib para eventos
+import java.awt.event.ActionListener; //Lib para eventos
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener; //Lib para eventos
 
 public class Ventana extends JFrame {
 	//defino un atributo JPanel para q pueda ser accedido en todos los metodos de la clase
@@ -78,7 +81,8 @@ public class Ventana extends JFrame {
 //		colocarRadioBotones();
 		colocarCampoTxt();
 		colocarAreaTxt();
-		colocarBtnEvento();
+//		colocarBtnEvento(); //.addActionListener
+		colocarBtnEvento2(); ///addMouseListener
 		
 		//FINALLY, AGREGO EL PANEL EN LA VENTANA EMERGENTE
 		this.getContentPane().add(panel); 
@@ -202,7 +206,7 @@ public class Ventana extends JFrame {
 	
 	private void colocarAreaTxt() {
 		areaTxtDescripcion = new JTextArea();
-		areaTxtDescripcion.setText("Describite en 2 palabras");
+//		areaTxtDescripcion.setText("Describite en 2 palabras");
 		areaTxtDescripcion.setBounds(200,110,200,100);
 		areaTxtDescripcion.setFont(new Font("arial",Font.ITALIC,10));
 		areaTxtDescripcion.setForeground(Color.GRAY);
@@ -210,20 +214,20 @@ public class Ventana extends JFrame {
 		panel.add(areaTxtDescripcion);
 	}
 	
-	private void colocarBtnEvento() {
-		JButton btnEvento = new JButton("Continuar");
+	private void colocarBtnEvento() { //btn con .addActionListener()
+		JButton btnEvento = new JButton("Continuar"); //instancio JButton q dispara evento
 		btnEvento.setBounds(250,250,100,100);
 		panel.add(btnEvento);
 		
-		JLabel saludo = new JLabel();
+		JLabel saludo = new JLabel(); //instancio el saludo (JLabel txt) q se vera al accionar el evento
 		saludo.setBounds(200,390,200,40);
 		saludo.setFont(new Font("arial",Font.BOLD,15));
 		saludo.setForeground(Color.YELLOW);
-		saludo.setHorizontalAlignment(SwingConstants.CENTER);
+		saludo.setHorizontalAlignment(SwingConstants.CENTER); //defino la posicion del texto dentro de la etiqueta (CENTRADO)
 		panel.add(saludo);
 		
-		JLabel aliento = new JLabel();
-		aliento.setBounds(150,470,300,30);
+		JLabel aliento = new JLabel(); //instancio el mensaje de aliento (JLabel txt) q se vera al accionar el evento
+		aliento.setBounds(120,470,360,30);
 		aliento.setFont(new Font("arial",3,12));
 		aliento.setForeground(Color.YELLOW);
 		aliento.setHorizontalAlignment(SwingConstants.CENTER);
@@ -243,7 +247,46 @@ public class Ventana extends JFrame {
 			}
 		};
 		
-		btnEvento.addActionListener(disparador);
+		btnEvento.addActionListener(disparador); //aplico el metodo .addActionListener(ActionListener al) al complemento JButton
+		//Para ejecutar este metodo hay q pasarle un obj de la clase ActionListener. Esta clase es una interface => todos sus metodos son abstract
+		//Para poder instanciar un objeto de la interface hay q @Override todos sus metodos. En este caso la clase tiene un unico metodo: public void actionPerformed(ActionEvent e)
+		//=> en dicho metodo se debe definir la reaccion q sucedera al disparar el evento clickeando en el componente (JButton) elegido
+	}
+	
+	public void colocarBtnEvento2() { //btn con .addMouseListener()
+		JButton btnEvento2 = new JButton("Hover me!");
+		btnEvento2.setBounds(250,250,100,100);
+		panel.add(btnEvento2);
+		
+		MouseListener disparadorOyenteDeMouse = new MouseListener() { //instnacio el objeto de la INTERFACE MouseListener => debo @Override todos sus metodos ya q son abstract
+
+			@Override
+			public void mouseClicked(MouseEvent e) { //cuando click sin unhover el componente
+				areaTxtDescripcion.append("MouseClicked en el componente\n");
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) { //cuando se presione el componente
+				areaTxtDescripcion.append("MousePressed en el componente\n");
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) { //cuando se "despresione" el componente
+				areaTxtDescripcion.append("MouseReleased en el componente\n");
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) { //cuando se haga hover en el componente
+				areaTxtDescripcion.append("MouseEntered en el componenente\n");
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) { //cuando se quite el cursore del encima del componenente
+				areaTxtDescripcion.append("MouseExited en el componente\n");
+			}
+		};
+		
+		btnEvento2.addMouseListener(disparadorOyenteDeMouse);
 	}
 }
 
