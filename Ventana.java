@@ -23,6 +23,8 @@ package Ventana;
 import java.awt.Color; //Lib para colores de bg y fg
 import java.awt.Font; //Lib para definir fuente de JLabel de texto
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame; //Lib para ventana emergente
 import javax.swing.JPanel; //Lib para panel en ventana
@@ -39,6 +41,9 @@ public class Ventana extends JFrame {
 	//defino un atributo JPanel para q pueda ser accedido en todos los metodos de la clase
 	//el panel sera instanciado en el metodo crearPanel()
 	private JPanel panel;
+	JTextField campoTxtNombre; //defino atributo JTextField
+	JTextField campoTxtApellido; //defino atributo JTextField
+	JTextArea areaTxtDescripcion; //defino atributo JTextArea
 	
 	//CREO Y DEFINO VENTANA
 	public Ventana() {
@@ -73,6 +78,7 @@ public class Ventana extends JFrame {
 //		colocarRadioBotones();
 		colocarCampoTxt();
 		colocarAreaTxt();
+		colocarBtnEvento();
 		
 		//FINALLY, AGREGO EL PANEL EN LA VENTANA EMERGENTE
 		this.getContentPane().add(panel); 
@@ -173,14 +179,16 @@ public class Ventana extends JFrame {
 	}
 
 	private void colocarCampoTxt() {
-		JTextField campoTxtNombre = new JTextField(); //instacio linea de txt
+//		JTextField campoTxtNombre = new JTextField(); // Definido como atributo al comienzo de la clase!!
+		campoTxtNombre = new JTextField();
 		campoTxtNombre.setBounds(200,20,200,30); //defino posicion y tamaño
 		campoTxtNombre.setText("Nombre"); //defino un texto por defecto
 		campoTxtNombre.setFont(new Font("arial",Font.ITALIC,10)); //defino fuente del texto
 		campoTxtNombre.setForeground(Color.GRAY); //defino color del texto
 //		cuadroTxt.setEditable(false); //defino si se puede editar o no el cuadro de texto (por defecto TRUE)
 
-		JTextField campoTxtApellido = new JTextField(); //instacio linea de txt
+//		JTextField campoTxtApellido = new JTextField(); // Definido como atributo al comienzo de la clase!!
+		campoTxtApellido = new JTextField(); //instacio linea de txt
 		campoTxtApellido.setBounds(200,65,200,30); //defino posicion y tamaño
 		campoTxtApellido.setText("Apellido");
 		campoTxtApellido.setFont(new Font("arial",Font.ITALIC,10)); //defino fuente del texto
@@ -193,13 +201,49 @@ public class Ventana extends JFrame {
 	}
 	
 	private void colocarAreaTxt() {
-		JTextArea areaTxt = new JTextArea();
-		areaTxt.setText("Descripción");
-		areaTxt.setBounds(200,110,200,100);
-		areaTxt.setFont(new Font("arial",Font.ITALIC,10));
-		areaTxt.setForeground(Color.GRAY);
+		areaTxtDescripcion = new JTextArea();
+		areaTxtDescripcion.setText("Describite en 2 palabras");
+		areaTxtDescripcion.setBounds(200,110,200,100);
+		areaTxtDescripcion.setFont(new Font("arial",Font.ITALIC,10));
+		areaTxtDescripcion.setForeground(Color.GRAY);
 		
-		panel.add(areaTxt);
+		panel.add(areaTxtDescripcion);
+	}
+	
+	private void colocarBtnEvento() {
+		JButton btnEvento = new JButton("Continuar");
+		btnEvento.setBounds(250,250,100,100);
+		panel.add(btnEvento);
+		
+		JLabel saludo = new JLabel();
+		saludo.setBounds(200,390,200,40);
+		saludo.setFont(new Font("arial",Font.BOLD,15));
+		saludo.setForeground(Color.YELLOW);
+		saludo.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(saludo);
+		
+		JLabel aliento = new JLabel();
+		aliento.setBounds(150,470,300,30);
+		aliento.setFont(new Font("arial",3,12));
+		aliento.setForeground(Color.YELLOW);
+		aliento.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(aliento);
+		
+		
+		ActionListener disparador = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saludo.setText("Hola "+campoTxtNombre.getText()+" "+campoTxtApellido.getText()+"!");
+				saludo.setOpaque(true);
+				saludo.setBackground(Color.BLACK);
+				
+				aliento.setText("Nos encanta que seas "+areaTxtDescripcion.getText().toLowerCase()+" :)");
+				aliento.setOpaque(true);
+				aliento.setBackground(Color.BLACK);
+			}
+		};
+		
+		btnEvento.addActionListener(disparador);
 	}
 }
 
