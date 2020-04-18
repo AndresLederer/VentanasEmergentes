@@ -34,19 +34,22 @@ import javax.swing.JRadioButton; //Lib para radio botones
 import javax.swing.ButtonGroup; //Lib para agrupar radio botones
 import javax.swing.JTextField; //Lib para campos de texto de una sola linea
 import javax.swing.JTextArea; //Lib para areas de txt de multiples lineas
+import javax.swing.JScrollPane; //Lib para la barra con flechitas (horizontal y vertical)
 
-import java.awt.event.ActionEvent; //Lib para eventos
-import java.awt.event.ActionListener; //Lib para eventos
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener; //Lib para eventos
+import java.awt.event.ActionEvent; //Lib para eventos de acciones 
+import java.awt.event.ActionListener; //Lib para eventos de acciones
+import java.awt.event.MouseEvent; //Lib para eventos del mouse
+import java.awt.event.MouseListener; //Lib para eventos del mouse
+import java.awt.event.KeyListener;// Lib para eventos del teclado
 
 public class Ventana extends JFrame {
 	//defino un atributo JPanel para q pueda ser accedido en todos los metodos de la clase
 	//el panel sera instanciado en el metodo crearPanel()
 	private JPanel panel;
-	JTextField campoTxtNombre; //defino atributo JTextField
-	JTextField campoTxtApellido; //defino atributo JTextField
-	JTextArea areaTxtDescripcion; //defino atributo JTextArea
+	private JTextField campoTxtNombre; //defino atributo JTextField
+	private JTextField campoTxtApellido; //defino atributo JTextField
+	private JTextArea areaTxtDescripcion; //defino atributo JTextArea
+	private JScrollPane scrollPane1;
 	
 	//CREO Y DEFINO VENTANA
 	public Ventana() {
@@ -81,8 +84,9 @@ public class Ventana extends JFrame {
 //		colocarRadioBotones();
 		colocarCampoTxt();
 		colocarAreaTxt();
-//		colocarBtnEvento(); //.addActionListener
-		colocarBtnEvento2(); ///addMouseListener
+//		colocarBtnEvento(); //	.addActionListener
+//		colocarBtnEvento2(); // .addMouseListener
+		colocarEvento3(); //	.addKeyListener
 		
 		//FINALLY, AGREGO EL PANEL EN LA VENTANA EMERGENTE
 		this.getContentPane().add(panel); 
@@ -91,10 +95,9 @@ public class Ventana extends JFrame {
 	private void crearPanel() {
 		//PANEL (JPanel)
 		panel = new JPanel(); //inicio un panel JPanel
-		panel.setBackground(Color.DARK_GRAY); //defino el color de fondo
 		panel.setLayout(null); //desactivo el diseño por defecto del panel para poder mover los componentes libremente 
+		panel.setBackground(Color.DARK_GRAY); //defino el color de fondo
 		//=> OBLIGADAMTE. DEBO DEFINIR UNA POSICION A CADA COMPONENTE DEL PANEL CON .setBounds(x,y,width,hight)
-
 	}
 	
 	private void colocarEtiquetas() {
@@ -200,19 +203,24 @@ public class Ventana extends JFrame {
 		
 //		System.out.println("TEXTO DEL campoTxtNombre: "+campoTxtNombre.getText()); //muestro por consola el texto q haya en campoTxtNombre
 		
-		panel.add(campoTxtNombre); //agrego la linea de texto al panel
+//		panel.add(campoTxtNombre); //agrego la linea de texto al panel
 		panel.add(campoTxtApellido); //agrego la linea de texto al panel
 	}
 	
 	private void colocarAreaTxt() {
-		areaTxtDescripcion = new JTextArea();
-//		areaTxtDescripcion.setText("Describite en 2 palabras");
-		areaTxtDescripcion.setBounds(200,110,200,100);
+		areaTxtDescripcion = new JTextArea(); //instancio area de texto sin contenido
+		areaTxtDescripcion.setText("Descripción");
 		areaTxtDescripcion.setFont(new Font("arial",Font.ITALIC,10));
 		areaTxtDescripcion.setForeground(Color.GRAY);
+
+		scrollPane1 = new JScrollPane(areaTxtDescripcion);//instancio una barra de scroll
 		
-		panel.add(areaTxtDescripcion);
+		//NOTA:para definir posicion en el panel hay q considerar que el JTextArea esta DENTRO del JScrollPane
+		scrollPane1.setBounds(200,110,200,100);
+		panel.add(scrollPane1);
 	}
+	
+	
 	
 	private void colocarBtnEvento() { //btn con .addActionListener()
 		JButton btnEvento = new JButton("Continuar"); //instancio JButton q dispara evento
@@ -258,7 +266,8 @@ public class Ventana extends JFrame {
 		btnEvento2.setBounds(250,250,100,100);
 		panel.add(btnEvento2);
 		
-		MouseListener disparadorOyenteDeMouse = new MouseListener() { //instnacio el objeto de la INTERFACE MouseListener => debo @Override todos sus metodos ya q son abstract
+		MouseListener disparadorOyenteDeMouse = new MouseListener() { //instnacio el objeto de la INTERFACE MouseListener 
+//		=> debo @Override todos sus metodos ya q son abstract
 
 			@Override
 			public void mouseClicked(MouseEvent e) { //cuando click sin unhover el componente
@@ -285,8 +294,11 @@ public class Ventana extends JFrame {
 				areaTxtDescripcion.append("MouseExited en el componente\n");
 			}
 		};
-		
 		btnEvento2.addMouseListener(disparadorOyenteDeMouse);
+	}
+	
+	public void colocarEvento3() {
+		
 	}
 }
 
