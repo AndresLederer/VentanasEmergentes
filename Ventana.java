@@ -36,11 +36,12 @@ import javax.swing.JTextField; //Lib para campos de texto de una sola linea
 import javax.swing.JTextArea; //Lib para areas de txt de multiples lineas
 import javax.swing.JScrollPane; //Lib para la barra con flechitas (horizontal y vertical)
 
-import java.awt.event.ActionEvent; //Lib para eventos de acciones 
 import java.awt.event.ActionListener; //Lib para eventos de acciones
-import java.awt.event.MouseEvent; //Lib para eventos del mouse
+import java.awt.event.ActionEvent; //Lib para eventos de acciones 
 import java.awt.event.MouseListener; //Lib para eventos del mouse
+import java.awt.event.MouseEvent; //Lib para eventos del mouse
 import java.awt.event.KeyListener;// Lib para eventos del teclado
+import java.awt.event.KeyEvent;// Lib para eventos del teclado
 
 public class Ventana extends JFrame {
 	//defino un atributo JPanel para q pueda ser accedido en todos los metodos de la clase
@@ -86,7 +87,7 @@ public class Ventana extends JFrame {
 		colocarAreaTxt();
 //		colocarBtnEvento(); //	.addActionListener
 //		colocarBtnEvento2(); // .addMouseListener
-		colocarEvento3(); //	.addKeyListener
+		colocarEventoKeyListener(); //	.addKeyListener
 		
 		//FINALLY, AGREGO EL PANEL EN LA VENTANA EMERGENTE
 		this.getContentPane().add(panel); 
@@ -209,7 +210,7 @@ public class Ventana extends JFrame {
 	
 	private void colocarAreaTxt() {
 		areaTxtDescripcion = new JTextArea(); //instancio area de texto sin contenido
-		areaTxtDescripcion.setText("Descripción");
+//		areaTxtDescripcion.setText("Descripción");
 		areaTxtDescripcion.setFont(new Font("arial",Font.ITALIC,10));
 		areaTxtDescripcion.setForeground(Color.GRAY);
 
@@ -219,8 +220,6 @@ public class Ventana extends JFrame {
 		scrollPane1.setBounds(200,110,200,100);
 		panel.add(scrollPane1);
 	}
-	
-	
 	
 	private void colocarBtnEvento() { //btn con .addActionListener()
 		JButton btnEvento = new JButton("Continuar"); //instancio JButton q dispara evento
@@ -297,9 +296,24 @@ public class Ventana extends JFrame {
 		btnEvento2.addMouseListener(disparadorOyenteDeMouse);
 	}
 	
-	public void colocarEvento3() {
-		
+	public void colocarEventoKeyListener() {
+		KeyListener accionKL = new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent ke) {
+//				areaTxtDescripcion.append("T");
+			}
+			@Override
+			public void keyPressed(KeyEvent ke) {
+//				areaTxtDescripcion.append("P");
+			}
+			@Override
+			public void keyReleased(KeyEvent ke) {
+//				areaTxtDescripcion.append("R");
+			}
+		};
+		campoTxtApellido.addKeyListener(accionKL);
 	}
+		
 }
 
 
